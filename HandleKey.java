@@ -16,7 +16,7 @@ public class HandleKey implements KeyListener
     
     //DEBUGGING
     public boolean checkDrawTime = false;
-    public boolean godModeOn = false;
+    public boolean god = false;
     
     
     
@@ -30,64 +30,13 @@ public class HandleKey implements KeyListener
         // TODO Auto-generated method stub
         
     }
+    
 
     @Override
     public void keyPressed(KeyEvent e)
     {
         int code = e.getKeyCode();
-        //TITLESTATE
-        if (p.gameState == p.titleState) 
-        {
-            titleState(code);
-            
-        }
-        //PLAYSTATE
-        else if (p.gameState == p.playState)
-        {
-            playState(code);
-        }
-        //PAUSE STATE
-        else if (p.gameState == p.pauseState)
-        {
-            pauseState(code);
-        }
-        //DIALOGUE STATE
-        else if (p.gameState == p.dialogueState || p.gameState == p.cutsceneState) 
-        {
-            dialogueState(code);
-        }
-        
-        //CHARACTER STATE
-        else if (p.gameState == p.characterState)
-        {
-            characterState(code);
-        }
-        //OPTIONS STATE
-        else if (p.gameState == p.optionsState)
-        {
-            optionsState(code);
-        }
-        
-        //GAME OVER STATE
-        else if (p.gameState == p.gameOverState)
-        {
-            gameOverState(code);
-        }
-        //STORE STATE
-        else if (p.gameState == p.storeState)
-        {
-            storeState(code);
-        }
-        
-        else if (p.gameState == p.mapState)
-        {
-            mapState(code);
-        }
-        
-        
-        
-        
-        
+        setState(code);
         
         
     }
@@ -513,6 +462,55 @@ public class HandleKey implements KeyListener
             pressSpace = false;
         }
        
+    }
+    public void setState(int code) {
+    	if (p.gameState == p.titleState) 
+        {
+            titleState(code);
+            
+        }
+        //PLAYSTATE
+        else if (p.gameState == p.playState)
+        {
+            playState(code);
+        }
+        //PAUSE STATE
+        else if (p.gameState == p.pauseState)
+        {
+            pauseState(code);
+        }
+        //DIALOGUE STATE
+        else if (p.gameState == p.dialogueState || p.gameState == p.cutsceneState) 
+        {
+            dialogueState(code);
+        }
+        
+        //CHARACTER STATE
+        else if (p.gameState == p.characterState)
+        {
+            characterState(code);
+        }
+        //OPTIONS STATE
+        else if (p.gameState == p.optionsState)
+        {
+            optionsState(code);
+        }
+        
+        //GAME OVER STATE
+        else if (p.gameState == p.gameOverState)
+        {
+            gameOverState(code);
+        }
+        //STORE STATE
+        else if (p.gameState == p.storeState)
+        {
+            storeState(code);
+        }
+        
+        else if (p.gameState == p.mapState)
+        {
+            mapState(code);
+        }
     }
 
 }

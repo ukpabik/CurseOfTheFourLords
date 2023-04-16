@@ -105,7 +105,6 @@ public class Panel extends JPanel implements Runnable
         op.placeObject();
         op.setNPC();
         op.setMonster();
-        op.setInteractiveTile();
         eGuide.setup();
         
         //for the ambient background music
@@ -253,7 +252,6 @@ public class Panel extends JPanel implements Runnable
             player.setDefault();
             player.setItems();
             op.placeObject();
-            op.setInteractiveTile();
             eGuide.lighting.resetTime();
         }
         
@@ -344,18 +342,7 @@ public class Panel extends JPanel implements Runnable
             
             entityList.clear();
             
-            //ENVIRONMENT
-            eGuide.draw(graph2);
-            
-            //MINIMAP
-            map.drawMinimap(graph2);
-            
-            
-            //UI
-            ui.draw(graph2);
-            
-            //CUTSCENES
-            cs.draw(graph2);
+            drawGUI(graph2);
             
         }
       //MORE DEBUGGING
@@ -364,13 +351,27 @@ public class Panel extends JPanel implements Runnable
 //            long drawEnd = System.nanoTime();
 //            long passed = drawEnd - drawStart;
 //            graph2.setColor(Color.white);
-//            graph2.drawString("DrawTime: " + passed, 10, 400);
-//            System.out.println("DrawTime: " + passed);
-//            graph2.drawString("God Mode: " + hk.godModeOn, 10, 420);
+//            graph2.drawString("RunTime: " + passed, 10, 400);
+//            System.out.println("RunTime: " + passed);
+//            graph2.drawString("God Mode: " + hk.god, 10, 420);
 //        }
         
         
         graph2.dispose();
+    }
+    public void drawGUI(Graphics2D graph) {
+    	Graphics2D graphics2 = graph;
+    	eGuide.draw(graphics2);
+        
+        //MINIMAP
+        map.drawMinimap(graphics2);
+        
+        
+        //UI
+        ui.draw(graphics2);
+        
+        //CUTSCENES
+        cs.draw(graphics2);
     }
     public void removeTemporary() {
     	for (int i = 0; i < maxMap; i++) {

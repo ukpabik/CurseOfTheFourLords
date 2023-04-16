@@ -152,7 +152,7 @@ public class EventHandler
             eventRect[map][col][row].y = row * p.tileSize + eventRect[map][col][row].y;
             
             //CHECKING EVENT.DONE FOR FALSE FOR ONE TIME EVENTS
-            if (p.player.solid.intersects(eventRect[map][col][row]) && eventRect[map][col][row].eventDone == false)
+            if (p.player.solid.intersects(eventRect[map][col][row]) && eventRect[map][col][row].eventComplete == false)
             {
                 if (p.player.direction.contentEquals(requiredDirection) || requiredDirection.contentEquals("any"))
                 {
@@ -172,22 +172,16 @@ public class EventHandler
         
         
     }
-    
-//    public void damagePit(int gameState)
-//    {
-//        
-//        p.gameState = gameState;
-//        p.ui.currentDialogue = "You got hit with a bang!";
-//        p.player.health -= 1;
-//        canTouchEvent = false;
-//    }
+	public void changeLocation(int map, int col, int row) {
+		tempMap = map;
+        tempCol = col;
+        tempRow = row;
+	}
     public void teleport(int map, int col, int row, int area) {
         p.gameState = p.transitionState;
         p.nextArea = area;
         
-        tempMap = map;
-        tempCol = col;
-        tempRow = row;
+        changeLocation(map, col, row);
         canTouchEvent = false;
         p.playEffect(11);
     }

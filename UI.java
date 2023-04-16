@@ -710,7 +710,7 @@ public class UI
     public void options_control(int xFrame, int yFrame) {
         int yText;
         int xText;
-        
+        graphics2.setFont(graphics2.getFont().deriveFont(17F));
         //TITLE
         String title = "Controls";
         xText = getCenterX(title);
@@ -724,6 +724,8 @@ public class UI
         yText += p.tileSize;
         graphics2.drawString("Interact/Attack", xText, yText);
         yText += p.tileSize;
+        graphics2.drawString("Guard/Parry", xText, yText);
+        yText += p.tileSize;
         graphics2.drawString("Shoot", xText, yText);
         yText += p.tileSize;
         graphics2.drawString("Character Select", xText, yText);
@@ -732,11 +734,13 @@ public class UI
         yText += p.tileSize;
         graphics2.drawString("Options", xText, yText);
         
+        
         xText = xFrame + p.tileSize * 6;
         yText = yFrame + p.tileSize * 2;
         //KEYS
         graphics2.drawString("WASD", xText, yText); yText += p.tileSize;
         graphics2.drawString("ENTER", xText, yText); yText += p.tileSize;
+        graphics2.drawString("SPACE", xText, yText); yText += p.tileSize;
         graphics2.drawString("H", xText, yText); yText += p.tileSize;
         graphics2.drawString("C", xText, yText); yText += p.tileSize;
         graphics2.drawString("P", xText, yText); yText += p.tileSize;
@@ -750,7 +754,7 @@ public class UI
             graphics2.drawString(">", xText-25, yText);
             
         }
-        
+        graphics2.setFont(graphics2.getFont().deriveFont(21F));
     }
     
     public void options_quitConfirm(int xFrame, int yFrame) {
@@ -1103,12 +1107,14 @@ public class UI
     	            double healthScale = (double)p.tileSize/m.maxHealth;
     	            double healthValue = healthScale * m.health;
     	            
-    	            
+    	            if (healthValue < 0) {
+    	            	healthValue = 0;
+    	            }
     	            //DISPLAYING IT ABOVE THE MONSTER
     	            graphics2.setColor(Color.black);
-    	            graphics2.fillRect(m.getScreenX() - 1, m.getScreenY() - 16, p.tileSize + 2, 12);
+    	            graphics2.fillRect(m.getXForScreen() - 1, m.getYForScreen() - 16, p.tileSize + 2, 12);
     	            graphics2.setColor(new Color(255,0,30));
-    	            graphics2.fillRect(m.getScreenX(), m.getScreenY() - 15, (int)healthValue, 10);
+    	            graphics2.fillRect(m.getXForScreen(), m.getYForScreen() - 15, (int)healthValue, 10);
     	            
     	            
     	            //TURNS ON/OFF HEALTH BAR IF 10 SECONDS PASS AND YOU DONT HIT THE MONSTER
@@ -1129,8 +1135,24 @@ public class UI
     	            
     	            graphics2.setColor(Color.BLACK);
     	            graphics2.fillRect(x-2,y-2, p.tileSize*8 + 2, 24);
-    	            graphics2.setColor(new Color(255,0,30));
-    	            graphics2.fillRect(x,y, (int)healthValue, 18);
+    	            if (m instanceof MON_DemonLord) {
+    	            	graphics2.setColor(new Color(255,69,0));
+        	            graphics2.fillRect(x,y, (int)healthValue, 18);
+    	            }
+    	            else if (m instanceof MON_GrassLord){
+    	            	graphics2.setColor(new Color(0,255,127));
+        	            graphics2.fillRect(x,y, (int)healthValue, 18);
+    	            }
+    	            else if (m instanceof MON_IceLord){
+    	            	graphics2.setColor(new Color (135,206,250));
+        	            graphics2.fillRect(x,y, (int)healthValue, 18);
+    	            }
+    	            else if (m instanceof MON_ThunderLord){
+    	            	graphics2.setColor(new Color(255,255,0));
+        	            graphics2.fillRect(x,y, (int)healthValue, 18);
+    	            }
+    	            
+    	            
     	            
     	            graphics2.setFont(graphics2.getFont().deriveFont(Font.BOLD, 23f));
     	            graphics2.setColor(Color.WHITE);
@@ -1152,7 +1174,7 @@ public class UI
         
         //Frame for window
         //RGB for white
-        c = new Color(255, 255, 255);
+        c = new Color(176,196,222);
         graphics2.setColor(c);
         //Defines the width of the outlines of graphics rendered with Graphics2D
         //5 Pixels

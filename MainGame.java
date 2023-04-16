@@ -19,17 +19,13 @@ public class MainGame
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(true);
         frame.setTitle("Curse of the Four Lords");
-        new MainGame().icon();
-        
         Panel panel = new Panel();
         frame.add(panel);
         panel.config.loadConfig();
-        
-        
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
-        
+        new MainGame().icon();
         panel.setGame();
         panel.startThread();
     }

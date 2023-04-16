@@ -29,10 +29,10 @@ public class EntityGenerator
         this.p = p;
     }
     
-    public Entity getObject(String itemName) {
+    public Entity getObject(String name) {
         Entity obj = null;
         
-        switch(itemName) {
+        switch(name) {
             case ObjectDevilsBlade.objName: obj = new ObjectDevilsBlade(p); break;
             case ObjectTitaniumSword.objName: obj = new ObjectTitaniumSword(p); break;
             case ObjectStartSword.objName: obj = new ObjectStartSword(p); break;

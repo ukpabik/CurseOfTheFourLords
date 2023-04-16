@@ -88,7 +88,10 @@ public class Lighting
         }
         
         
-        //CHECKING THE TIME OF DAY
+        updateTime();
+    }
+    public void updateTime() {
+    	//CHECKING THE TIME OF DAY
         //DAYTIME
         if (dayState == day) {
             dayCounter++;
@@ -126,8 +129,9 @@ public class Lighting
                 dayState = day;
             }
         }
-    }
-    public void resetTime() {
+		
+	}
+	public void resetTime() {
         dayState = day;
         filterAlpha = 0f;
     }

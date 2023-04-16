@@ -88,7 +88,7 @@ public class MON_Thunder extends Entity
             checkChasing(p.player, 25, 100);
             //FOLLOWING THE PLAYER
             
-            pathSearch(getGoalCol(p.player), getGoalRow(p.player));
+            pathSearch(getGoalColumn(p.player), getGoalRow(p.player));
             //SIMPLE AI FOR PROJECTILES
             checkShooting(200, 30);
         }

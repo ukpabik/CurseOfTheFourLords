@@ -79,7 +79,7 @@ public class MON_Skeleton extends Entity
             checkChasing(p.player, 15, 100);
             //FOLLOWING THE PLAYER
             
-            pathSearch(getGoalCol(p.player), getGoalRow(p.player));
+            pathSearch(getGoalColumn(p.player), getGoalRow(p.player));
         }
         else {
                 //CHECK IF THE ENTITY STARTS CHASING

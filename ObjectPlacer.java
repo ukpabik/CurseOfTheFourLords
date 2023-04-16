@@ -23,8 +23,6 @@ public class ObjectPlacer
     public ObjectPlacer(Panel p)
     {
         this.p = p;
-        
-        
     }
     
     public void setMonster()
@@ -212,13 +210,7 @@ public class ObjectPlacer
         
         
     }
-    public void setInteractiveTile()
-    {
-        int map = 0;
-        int i = 0;
-        //SET TILES
-    }
-    
+        
     public void setNPC()
     {
         int map = 0;

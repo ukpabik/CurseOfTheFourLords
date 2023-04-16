@@ -5,7 +5,6 @@ import java.awt.Rectangle;
 public class EventRect extends Rectangle
 {
     //DEFAULT VALUES
-    int eventRectDefaultX;
-    int eventRectDefaultY;
-    boolean eventDone = false;
+    int eventRectDefaultX, eventRectDefaultY;
+    boolean eventComplete = false;
 }
