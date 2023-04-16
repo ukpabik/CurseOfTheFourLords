@@ -1,6 +1,7 @@
 # CurseOfTheFourLords
 Curse of the Four Lords is a 2D RPG clone that I made as my first major project. It comes with a short and sweet action experience
 for those who enjoy something quick and easy.
+Coded entirely in Java.
 
 The game includes:
 
