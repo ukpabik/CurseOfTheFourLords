@@ -9,11 +9,9 @@ public class Particle extends Entity
 {
     //ENTITY THAT PRODUCES THE PARTICLE
     Entity generator;
-    Color color;
+    Color particleColor;
     
-    int size;
-    int x;
-    int y;
+    int size, x, y;
     
     
     public Particle(Panel p, Entity generator, Color color, 
@@ -23,7 +21,7 @@ public class Particle extends Entity
         
         this.generator = generator;
         this.size = size;
-        this.color = color;
+        this.particleColor = color;
         this.speed = speed;
         this.maxHealth = maxHealth;
         this.x = x;
@@ -56,7 +54,7 @@ public class Particle extends Entity
         int xScreen = worldX - p.player.worldX + p.player.screenX;
         int yScreen = worldY - p.player.worldY + p.player.screenY;
         
-        graph2.setColor(color);
+        graph2.setColor(particleColor);
         //WIDTH AND HEIGHT IS SIZE
         graph2.fillRect(xScreen, yScreen, size, size);
     }

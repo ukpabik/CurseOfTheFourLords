@@ -60,7 +60,6 @@ public class NPC_PigMerchant extends Entity
     }
     
     public void setItems() {
-        inventory.add(new ObjectGKey(p));
         inventory.add(new ObjectRefiller(p));
         inventory.add(new ObjectStartSword(p));
         inventory.add(new ObjectWoodShield(p));

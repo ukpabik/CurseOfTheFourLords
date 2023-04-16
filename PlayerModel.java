@@ -219,21 +219,13 @@ public class PlayerModel extends Entity
             }
             
             
-            attackCancel = false;
-            p.hk.pressEnter = false;
-            guarding = false;
-            guardCount = 0;
+            notFighting();
             
             //used to change image direction
-            spriteCount++;
-            if (spriteCount > 15){ //changes the speed of direction change
-                if (spriteNumber == 1){spriteNumber = 2;}
-                else if (spriteNumber == 2){spriteNumber = 1;}
-                
-                spriteCount = 0;
-                
-            }
+            spriteCounter();
+        
         }
+        
         
         //MAKES IT SO YOU CAN ONLY SHOOT 1 PROJECTILE AT A TIME
         if (p.hk.pressShootKey == true && projectile.alive == false 
@@ -259,7 +251,11 @@ public class PlayerModel extends Entity
             //ADD SOUND EFFECT
         }
         //NEEDS TO BE OUTSIDE KEY PRESSED IF STATEMENT SO IT HAPPENS WHILE YOU ARENT MOVING ASWELL
-        if (invincible == true)
+        settingAttributes();
+        
+    }
+    public void settingAttributes() {
+    	if (invincible == true)
         {
             invincibleCount++;
             //TIME IT TAKES TO BE HIT AGAIN (60 = 1 second)
@@ -283,7 +279,7 @@ public class PlayerModel extends Entity
         {
             projectileAmount = maxProjectileAmount;
         }
-        if (hk.godModeOn == false) {
+        if (hk.god == false) {
             if (health <= 0) {
                 p.gameState = p.gameOverState;
                 p.stopMusic();
@@ -291,9 +287,24 @@ public class PlayerModel extends Entity
                 p.playEffect(10);
             }
         }
-        
+		
+	}
+
+	public void notFighting() {
+    	attackCancel = false;
+        p.hk.pressEnter = false;
+        guarding = false;
+        guardCount = 0;
     }
-    
+    public void spriteCounter() {
+    	spriteCount++;
+        if (spriteCount > 15){ //changes the speed of direction change
+            if (spriteNumber == 1){spriteNumber = 2;}
+            else if (spriteNumber == 2){spriteNumber = 1;}
+            
+            spriteCount = 0;
+        }
+    }
     public void pickUpObject(int i)
     {
         if (i != 999) 

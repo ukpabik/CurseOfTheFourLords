@@ -2,9 +2,9 @@ package ai;
 
 public class Node
 {
-    Node parent;
+    Node root;
     public int col,row;
-    int gCost,fCost,hCost;
+    int gValue,fValue,hValue;
     boolean solidTile,openSpace,checkedSpace;
     
     public Node(int col, int row) {

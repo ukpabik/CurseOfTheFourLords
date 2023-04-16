@@ -1,7 +1,6 @@
 package entity;
 
 import java.awt.AlphaComposite;
-import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
@@ -23,7 +22,7 @@ public class Entity
     //IMAGES FOR SPRITES
     public BufferedImage image, image2, image3;
     public String name;
-    public BufferedImage up1, up2, down1, down2, left1, left2, right1, right2, right3, checkmark;
+    public BufferedImage up1, up2, down1, down2, left1, left2, right1, right2, checkmark;
     public BufferedImage attackUp1, attackUp2, attackDown1, attackDown2, attackLeft1,
         attackLeft2, attackRight1, attackRight2, guardUp, guardDown, guardLeft, guardRight;
     public String direction = "down";
@@ -138,21 +137,20 @@ public class Entity
     	}
     	return inView;
     }
-    public int getScreenX() {
+    public int getXForScreen() {
     	int screenX = worldX - p.player.worldX + p.player.screenX;
     	return screenX;
     }
-    public int getScreenY() {
+    public int getYForScreen() {
     	int screenY = worldY - p.player.worldY + p.player.screenY;
     	return screenY;
     }
     //Drawing the entities
     public void draw(Graphics2D graphics2)
     {
-        BufferedImage image = null;
+        BufferedImage entityImage = null;
         
-        int tempX = getScreenX();
-        int tempY = getScreenY();
+        int temporaryX = getXForScreen(), temporaryY = getYForScreen();
         //this if statement makes the game not draw tiles that arent on the screen
         //improves game performance/map rendering speed
         if (inView())
@@ -163,50 +161,50 @@ public class Entity
             {
                 case "up":
                     if (attacking == false){
-                        if (spriteNumber == 1){image = up1;}
-                        if (spriteNumber == 2){image = up2;}
+                        if (spriteNumber == 1){entityImage = up1;}
+                        if (spriteNumber == 2){entityImage = up2;}
                     }
                     if (attacking == true){
                         //ADJUSTING IMAGES FOR ATTACKING
-                        tempY = getScreenY() - up1.getHeight();
-                        if (spriteNumber == 1){image = attackUp1;}
-                        if (spriteNumber == 2){image = attackUp2;}
+                        temporaryY = getYForScreen() - up1.getHeight();
+                        if (spriteNumber == 1){entityImage = attackUp1;}
+                        if (spriteNumber == 2){entityImage = attackUp2;}
                     }
                     
                     break;
                     
                 case "down":
                     if (attacking == false){
-                        if (spriteNumber == 1){image = down1;}
-                        if (spriteNumber == 2){image = down2;}
+                        if (spriteNumber == 1){entityImage = down1;}
+                        if (spriteNumber == 2){entityImage = down2;}
                     }
                     if (attacking == true){
-                        if (spriteNumber == 1){image = attackDown1;}
-                        if (spriteNumber == 2){image = attackDown2;}
+                        if (spriteNumber == 1){entityImage = attackDown1;}
+                        if (spriteNumber == 2){entityImage = attackDown2;}
                     }
                     
                 break;
                 
                 case "left":
                     if (attacking == false){
-                        if (spriteNumber == 1){image = left1;}
-                        if (spriteNumber == 2){image = left2;}
+                        if (spriteNumber == 1){entityImage = left1;}
+                        if (spriteNumber == 2){entityImage = left2;}
                     }
                     if (attacking == true){
-                        tempX = getScreenX() - left1.getWidth();
-                        if (spriteNumber == 1){image = attackLeft1;}
-                        if (spriteNumber == 2){image = attackLeft2;}
+                        temporaryX = getXForScreen() - left1.getWidth();
+                        if (spriteNumber == 1){entityImage = attackLeft1;}
+                        if (spriteNumber == 2){entityImage = attackLeft2;}
                     }
                 break;
                 
                 case "right":
                     if (attacking == false){
-                        if (spriteNumber == 1){image = right1;}
-                        if (spriteNumber == 2){image = right2;}
+                        if (spriteNumber == 1){entityImage = right1;}
+                        if (spriteNumber == 2){entityImage = right2;}
                     }
                     if (attacking == true){
-                        if (spriteNumber == 1){image = attackRight1;}
-                        if (spriteNumber == 2){image = attackRight2;}
+                        if (spriteNumber == 1){entityImage = attackRight1;}
+                        if (spriteNumber == 2){entityImage = attackRight2;}
                     }
                     
                     break;
@@ -215,22 +213,25 @@ public class Entity
             
             
             //INVINCIBLE INDICATOR
-            if (invincible == true){
-                healthBarOn = true;
-                healthCount = 0;
-                //SETS BLINKING OPACITY INDICATOR
-                changeAlpha(graphics2, 0.4f);
-                if (invincibleCount > 15){changeAlpha(graphics2, 1f);
-                    if (invincibleCount > 35){changeAlpha(graphics2, 0.4f);
-                        if (invincibleCount > 50){changeAlpha(graphics2, 1f);}
-                    }
-                }
-            }
+            ifInvincible(graphics2);
             //CHECK TO SEE IF MONSTER IS DYING
             if (death == true){deathAnimation(graphics2);}
             //draws each row and column
-            graphics2.drawImage(image, tempX, tempY, null);
+            graphics2.drawImage(entityImage, temporaryX, temporaryY, null);
         }
+    public void ifInvincible(Graphics2D graphics2) {
+    	if (invincible == true){
+            healthBarOn = true;
+            healthCount = 0;
+            //SETS BLINKING OPACITY INDICATOR
+            changeAlpha(graphics2, 0.4f);
+            if (invincibleCount > 15){changeAlpha(graphics2, 1f);
+                if (invincibleCount > 35){changeAlpha(graphics2, 0.4f);
+                    if (invincibleCount > 50){changeAlpha(graphics2, 1f);}
+                }
+            }
+        }
+    }
     
     //DRAWING DEATH ANIMATION 
     public void deathAnimation(Graphics2D graph2)
@@ -253,8 +254,7 @@ public class Entity
     {
         graph2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alphaValue));
     }
-    public void setAction(){}
-    public void checkDrop(){}
+    
     //METHOD THAT DETERMINES WHAT ITEMS ARE DROPPED
     //DIFFERENT DEPENDING ON MONSTER
     public void dropItem(Entity droppedItem)
@@ -271,7 +271,7 @@ public class Entity
         }
     }
     
-    public void damageReaction(){}
+    
     public void speak(){
     	p.playEffect(9);
     }
@@ -649,7 +649,7 @@ public class Entity
         int tileDistance = (getXDistance(target) + getYDistance(target))/p.tileSize;
         return tileDistance;
     }
-    public int getGoalCol(Entity target) {
+    public int getGoalColumn(Entity target) {
         int goalCol = (target.worldX + target.solid.x)/p.tileSize;
         return goalCol;
     }
@@ -791,7 +791,9 @@ public class Entity
             }
         }
     }
-        
+    public void setAction(){}
+    public void checkDrop(){}
+    public void damageReaction(){}
 }
 
 

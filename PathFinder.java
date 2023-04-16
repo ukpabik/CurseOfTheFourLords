@@ -20,29 +20,29 @@ public class PathFinder
     }
     
     public void createNodes() {
-    	int col=0,row=0;
+    	int col=0,row=0, worldCol = p.maximumWCol, worldRow = p.maximumWRow;
         node = new Node[p.maximumWCol][p.maximumWRow];
         
-        while (col < p.maximumWCol && row < p.maximumWRow) {
+        while (col < worldCol && row < worldRow) {
             //CREATING NODE FOR EVERY TILE ON THE MAP
             node[col][row] = new Node(col,row);
             col++;
-            if (col == p.maximumWCol) {col = 0;row++;}
+            if (col == worldCol) {col = 0;row++;}
         }
         
     }
     //RESET NODES BECAUSE YOU PATHFIND A LOT
     public void resetNodes() {
-        int column=0,row=0;
+    	int column=0,row=0, worldCol = p.maximumWCol, worldRow = p.maximumWRow;
         
-        while (column < p.maximumWCol && row < p.maximumWRow) {
+        while (column < worldCol && row < worldRow) {
             //RESET ALL OF THE NODES
             node[column][row].openSpace = false;
             node[column][row].checkedSpace = false;
             node[column][row].solidTile = false;
             
             column++;
-            if (column == p.maximumWCol) {
+            if (column == worldCol) {
                 column = 0;
                 row++;
             }
@@ -72,7 +72,7 @@ public class PathFinder
             }
             
             //SET COST ON THE NODE
-            setCost(node[column][row]);
+            setValue(node[column][row]);
             
             column++;
             if (column == p.maximumWCol) {
@@ -81,18 +81,18 @@ public class PathFinder
             }
         }
     }
-    public void setCost(Node node) {
-        //G COST
+    public void setValue(Node node) {
+        //G Value
         int xDistance = Math.abs(node.col - start.col);
         int yDistance = Math.abs(node.row - start.row);
-        node.gCost = xDistance + yDistance;
-        //H COST
+        node.gValue = xDistance + yDistance;
+        //H Value
         xDistance = Math.abs(node.col - goal.col);
         yDistance = Math.abs(node.row - goal.row);
-        node.hCost = xDistance + yDistance;
+        node.hValue = xDistance + yDistance;
         
-        //F COST
-        node.fCost = node.gCost + node.hCost;
+        //F Value
+        node.fValue = node.gValue + node.hValue;
     }
     public void directionalNodes(int col, int rows) {
     	int column = col;
@@ -111,7 +111,7 @@ public class PathFinder
             int column = current.col;
             int row = current.row;
             int bestNode = 0;
-            int bestfCost = 999;
+            int bestfValue = 999;
             //CHECK THE CURRENT NODE
             current.checkedSpace = true;
             openList.remove(current);
@@ -122,11 +122,11 @@ public class PathFinder
             {
                 //CHECK IF THE FCOST FOR THE NODE IS BETTER THAN THE NEXT NODE
                 
-                if (openList.get(i).fCost < bestfCost) {bestNode = i;bestfCost = openList.get(i).fCost;}
+                if (openList.get(i).fValue < bestfValue) {bestNode = i;bestfValue = openList.get(i).fValue;}
                 
                 //IF FCOST IS EQUAL, CHECK THE GCOST INSTEAD
-                else if (openList.get(i).fCost == bestfCost) {
-                    if(openList.get(i).gCost < openList.get(bestNode).gCost) {bestNode = i;}}
+                else if (openList.get(i).fValue == bestfValue) {
+                    if(openList.get(i).gValue < openList.get(bestNode).gValue) {bestNode = i;}}
                 }
             //IF THERE ARE NO NODES IN THE OPENLIST, END THE LOOP
             if (openList.size() == 0) {break;}
@@ -145,7 +145,7 @@ public class PathFinder
         if (node.openSpace == false && node.checkedSpace == false && node.solidTile == false) {
             //SCAN FOR NODES IN THE OPEN LIST
             node.openSpace = true;
-            node.parent = current;
+            node.root = current;
             openList.add(node);
         }
     }
@@ -155,7 +155,7 @@ public class PathFinder
         while(current != start) {
             //ADDING TO THE 0 SLOT SO THE LAST ADDED NODE IS IN THE FIRST SLOT
             path.add(0,current);
-            current = current.parent;
+            current = current.root;
         }
         
     }
