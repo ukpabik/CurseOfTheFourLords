@@ -208,6 +208,10 @@ public class UI
             }
             i++;
             x += size;
+            if (i % 7 == 0) {
+            	x = p.tileSize/2;
+            	y += size;
+            }
         }
         
         //DRAWING PROJECTILE COUNTER
